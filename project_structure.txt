@@ -1,0 +1,50 @@
+|-- LICENSE
+|-- Makefile
+|-- README.md
+|-- data
+  |-- processed
+    |-- imdb_clean.csv
+  |-- raw
+    |-- desafio_indicium_imdb.csv
+|-- dataset.py
+|-- estrutura.py
+|-- imdb_clean.csv
+|-- lh_cd_mariajuliapessoa
+  |-- __init__.py
+  |-- config.py
+|-- models
+  |-- imdb_rating_model.pkl
+|-- notebooks
+  |-- EDA.ipynb
+  |-- Modeling.ipynb
+  |-- reports
+    |-- figures
+|-- reports
+  |-- analysis
+    |-- eda_report.md
+    |-- modeling_report.md
+  |-- figures
+    |-- Boxplot of Gross_USD (outliers).png
+    |-- Boxplot of IMDB_Rating (outliers).png
+    |-- Boxplot of Meta_Score (outliers).png
+    |-- Boxplot of No_of_Votes (outliers).png
+    |-- Boxplot of Runtime_Min (outliers).png
+    |-- Correlation between No_of_Votes, Meta_Score, IMDB_Rating and Gross.png
+    |-- Distribution of Movie Genre (Multi-hot).png
+    |-- Distribution of Movies Certificates.png
+    |-- Top 10 Genres Share.png
+    |-- Total Gross Revenue by Top Genres.png
+|-- requirements.txt
+|-- src
+  |-- __init__.py
+  |-- __pycache__
+    |-- __init__.cpython-311.pyc
+    |-- data_prep.cpython-311.pyc
+    |-- imports.cpython-311.pyc
+    |-- plots.cpython-311.pyc
+  |-- analysis.py
+  |-- data_prep.py
+  |-- imports.py
+  |-- plots.py
+  |-- reports
+    |-- figures
