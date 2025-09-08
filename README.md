@@ -1,165 +1,140 @@
-# LH_CD_MARIAJULIAPESSOA
+````markdown
+# IMDB Rating Prediction – Desafio Cientista de Dados
 
-## Descrição do Projeto
+## Project Overview
 
-Este projeto contém a resolução do **Desafio Cientista de Dados** da Indicium, aplicado à base de dados cinematográfica da PProductions. O objetivo é realizar uma análise exploratória detalhada, responder perguntas estratégicas sobre filmes e desenvolver um modelo preditivo para a nota do IMDB.
+This project is part of the "Desafio Cientista de Dados" by Indicium, in collaboration with the PProductions studio.  
+The goal is to analyze a movie dataset and build a model capable of predicting IMDB ratings based on movie characteristics such as runtime, genre, certificate, overview, votes, gross revenue, and meta scores.
 
-O projeto segue a **estrutura Cookiecutter Data Science (CCDS v2)** para garantir modularidade, reprodutibilidade e boas práticas de engenharia de dados e ciência de dados.
+The project includes:
+- Exploratory Data Analysis (EDA)
+- Feature Engineering
+- Predictive Modeling using Gradient Boosting Regressor
+- Saving the trained model for future predictions
 
 ---
 
-## Estrutura do Projeto
+## Project Structure
 
-```
-
-lh\_cd\_mariajuliapessoa/
-├── LICENSE
-├── Makefile
-├── README.md
-├── data/
-│   ├── interim/       # Dados transformados intermediários
-│   ├── processed/     # Dados prontos para modelagem
-│   └── raw/           # Base de dados original
-├── docs/              # Documentação adicional
-├── models/            # Modelos treinados e arquivo .pkl final
-├── notebooks/         # Jupyter notebooks organizados por fase
-├── pyproject.toml     # Configuração do projeto
-├── references/        # Material de apoio, papers e manuais
-├── reports/
-│   └── figures/       # Gráficos gerados
-├── requirements.txt   # Pacotes necessários
-├── setup.cfg          # Configuração de linting/formatting
-└── lh\_cd\_mariajuliapessoa/   # Código fonte reutilizável
-├── **init**.py
-├── config.py
-├── dataset.py
-├── features.py
-├── modeling/
-│   ├── **init**.py
-│   ├── train.py
-│   └── predict.py
-└── plots.py
-
+```text
+|-- LICENSE
+|-- Makefile
+|-- README.md
+|-- data
+  |-- processed
+    |-- imdb_clean.csv
+  |-- raw
+    |-- desafio_indicium_imdb.csv
+|-- dataset.py
+|-- lh_cd_mariajuliapessoa
+  |-- __init__.py
+  |-- config.py
+|-- models
+  |-- imdb_rating_model.pkl
+|-- notebooks
+  |-- EDA.ipynb
+  |-- Modeling.ipynb
+|-- reports
+  |-- analysis
+    |-- eda_report.md
+    |-- modeling_report.md
+  |-- figures
+|-- requirements.txt
+|-- src
+  |-- __init__.py
+  |-- __pycache__
+    |-- *.pyc
+  |-- data_prep.py
+  |-- imports.py
+  |-- plots.py
 ````
 
 ---
 
-## Instalação
+## Folder and File Description
 
-1. Clone o repositório:
+* **data/raw** – Original CSV dataset provided by Indicium.
+* **data/processed** – Cleaned dataset ready for analysis (`imdb_clean.csv`).
+* **notebooks** – Jupyter notebooks containing EDA and Modeling workflows.
+* **notebooks/reports/figures** – Figures generated within notebooks.
+* **reports/analysis** – Markdown reports summarizing EDA and modeling results.
+* **reports/figures** – Visualizations exported from notebooks for reporting purposes.
+* **models** – Serialized trained model (`.pkl`) for IMDB rating prediction.
+* **src** – Python modules for reusable code:
+
+  * `data_prep.py` – Data cleaning and preprocessing functions
+  * `plots.py` – Functions for visualizations
+  * `imports.py` – Centralized import management
+* **lh\_cd\_mariajuliapessoa** – Configuration files for project-specific settings.
+* **requirements.txt** – Python package dependencies.
+* **Makefile / LICENSE** – Optional project utilities and license information.
+
+---
+
+## Setup Instructions
+
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/seuusuario/lh_cd_mariajuliapessoa.git
+git clone https://github.com/<your-username>/lh_cd_mariajuliapessoa.git
 cd lh_cd_mariajuliapessoa
-````
+```
 
-2. Crie e ative o ambiente virtual:
+2. Create a virtual environment (recommended):
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate      # Windows
 ```
 
-3. Instale as dependências:
+3. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Abra os notebooks para exploração e execução:
+4. Run notebooks:
 
-```bash
-jupyter notebook notebooks/
-```
+* `EDA.ipynb` – Explore and visualize dataset.
+* `Modeling.ipynb` – Train model, evaluate performance, and make predictions.
 
 ---
 
-## Conteúdo do Projeto
-
-### 1. Exploração de Dados (EDA)
-
-* Notebooks `0.*` contêm análise exploratória da base de dados.
-* Objetivo: identificar padrões, distribuições e correlações.
-* Inclusão de dados externos quando relevante.
-
-### 2. Análise Estratégica
-
-* Resposta às perguntas do desafio:
-
-  * Filme recomendado sem conhecer a pessoa.
-  * Principais fatores relacionados a alto faturamento.
-  * Insights da coluna `Overview` e inferência de gênero.
-  * Planejamento de previsão do IMDB Rating (tipo de problema, variáveis, modelo e métricas).
-
-### 3. Modelagem
-
-* Notebooks `3.*` e scripts `modeling/train.py` e `modeling/predict.py`.
-* Desenvolvimento de modelo preditivo para nota do IMDB.
-* Modelo salvo em `models/imdb_model.pkl`.
-
-### 4. Relatórios e Visualizações
-
-* Relatórios em PDF/HTML extraídos de notebooks.
-* Gráficos prontos para apresentação em `reports/figures`.
-
-### 5. Código Modular
-
-* Todo código reutilizável está dentro do módulo `lh_cd_mariajuliapessoa/`.
-* Facilita importação em notebooks e scripts:
+## Usage Example
 
 ```python
-from lh_cd_mariajuliapessoa.dataset import load_data
-from lh_cd_mariajuliapessoa.features import create_features
-from lh_cd_mariajuliapessoa.plots import plot_distribution
+from src.data_prep import load_data
+from src.analysis import some_analysis_function
+from src.plots import plot_distribution
+
+# Load processed data
+df = load_data("data/processed/imdb_clean.csv")
+```
+
+Predict IMDB rating for a new movie:
+
+```python
+from src.model_predict import predict_imdb_rating
+new_movie = {
+ 'Series_Title': 'The Shawshank Redemption',
+ 'Released_Year': 1994,
+ 'Certificate': 'A',
+ 'Runtime_Min': 142,
+ 'Genre': 'Drama',
+ 'Overview': 'Two imprisoned men bond over a number of years...',
+ 'Meta_score': 80.0,
+ 'No_of_Votes': 2343110,
+ 'Gross_USD': 28341469
+}
+rating = predict_imdb_rating(new_movie)
+print(rating)  # Output: 8.61
 ```
 
 ---
 
-## Execução
+## License
 
-1. Para rodar notebooks: `jupyter notebook notebooks/`
-2. Para treinar o modelo diretamente pelo script:
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
-```bash
-python -m lh_cd_mariajuliapessoa.modeling.train
-```
-
-3. Para gerar predições com o modelo salvo:
-
-```bash
-python -m lh_cd_mariajuliapessoa.modeling.predict
-```
-
----
-
-## Entregáveis
-
-* `README.md` com instruções de uso.
-* `requirements.txt` com todas as dependências.
-* Notebooks com EDA e análises estatísticas.
-* Scripts de modelagem (`train.py` e `predict.py`).
-* Modelo final salvo como `.pkl` (`models/imdb_model.pkl`).
-* Relatórios PDF/HTML com visualizações.
-
----
-
-## Autor
-
-Maria Julia Pessoa Cunha
-Orientador: João Victor Tinoco de Souza Abreu
-
----
-
-## Licença
-
-Este projeto está sob licença MIT. Consulte o arquivo `LICENSE` para detalhes.
-
-```
-
----
-
-Se você quiser, eu posso **gerar também o Makefile inicial pronto**, já com comandos para criar ambiente, instalar dependências, rodar notebooks, treinar modelo e gerar gráficos — assim você só precisa colocar o código do desafio dentro da estrutura.  
-
-Quer que eu faça isso?
 ```
