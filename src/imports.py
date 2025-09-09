@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 import re
+import os
+import sys
 
 from pytrends.request import TrendReq 
 from scipy.stats import kruskal
@@ -19,3 +21,4 @@ from sklearn.metrics import classification_report, confusion_matrix, mean_square
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+
