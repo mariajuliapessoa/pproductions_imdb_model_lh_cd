@@ -94,3 +94,16 @@ def split_genres(x):
 def top_n(series, n=10):
     return series.value_counts().head(n)
 
+# Return a predefined list of the movies genres 
+def get_genre_list():
+    return [
+        'Drama', 'Comedy', 'Crime', 'Adventure', 'Action', 'Thriller',
+        'Romance', 'Biography', 'Mystery', 'Animation', 'Sci-Fi', 'Fantasy',
+        'Family', 'History', 'War', 'Music', 'Horror', 'Western', 'Film-Noir', 'Sport'
+    ]
+
+# Create a dictionary with genres as keys and 0 as initial values
+def create_genre_dict():
+    return {genre: 0 for genre in get_genre_list()}
+
+

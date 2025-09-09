@@ -1,4 +1,5 @@
 from src.imports import *
+from src.data_prep import get_genre_list, create_genre_dict
 
 # plots.py
 import os
@@ -78,40 +79,12 @@ def plot_corr_heatmap(df: pd.DataFrame, numeric_cols: list = None):
     plt.title("Correlation Heatmap of Numeric Features")
     plt.show()
 
-# src/plots.py
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 def genre_analysis(df: pd.DataFrame):
-    """
-    Generate visual analysis of movie genres using multi-hot encoded genre columns.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        DataFrame containing multi-hot encoded genre columns and Gross_USD.
-
-    Outputs:
-    --------
-    1. Barplot of number of movies per genre
-    2. Pie chart of top 10 genres
-    3. Boxplot of Gross revenue per top 10 genre
-    """
-
-    # Identify multi-hot genre columns
-    genre_cols = [col for col in df.columns if col in [
-        'Drama', 'Comedy', 'Crime', 'Adventure', 'Action', 'Thriller', 'Romance', 
-        'Biography', 'Mystery', 'Animation', 'Sci-Fi', 'Fantasy', 'Family', 'History',
-        'War', 'Music', 'Horror', 'Western', 'Film-Noir', 'Sport'
-    ]]
-
+    genre_cols = [col for col in df.columns if col in get_genre_list()]
     if not genre_cols:
-        print("No multi-hot genre columns found in DataFrame.")
         return
 
-    # Barplot: total movies per genre
     genre_counts = df[genre_cols].sum().sort_values(ascending=False)
     plt.figure(figsize=(12,6))
     sns.barplot(x=genre_counts.index, y=genre_counts.values, palette='pastel')
@@ -122,7 +95,6 @@ def genre_analysis(df: pd.DataFrame):
     plt.tight_layout()
     plt.show()
 
-    # Pie chart: top 10 genres
     top_genres = genre_counts.head(10)
     plt.figure(figsize=(8,8))
     plt.pie(top_genres.values, labels=top_genres.index, autopct='%1.1f%%', startangle=140,
@@ -130,26 +102,19 @@ def genre_analysis(df: pd.DataFrame):
     plt.title('Top 10 Genres Share (Multi-hot)')
     plt.show()
 
-    # Boxplot: Gross revenue by top 10 genres
     top_genres_list = top_genres.index.tolist()
     df_box = []
-
     for genre in top_genres_list:
         if 'Gross_USD' not in df.columns:
             continue
         temp = df[df[genre]==1][['Gross_USD']].copy()
-        temp = temp.dropna(subset=['Gross_USD'])           # remove NaNs
+        temp = temp.dropna(subset=['Gross_USD'])
         temp['Genre'] = genre
         df_box.append(temp)
-
     if not df_box:
-        print("No data available for Gross_USD boxplot.")
         return
 
-    # Concat all genres together
     df_box = pd.concat(df_box, ignore_index=True)
-
-    # Ensure numeric type for Gross_USD
     df_box['Gross_USD'] = pd.to_numeric(df_box['Gross_USD'], errors='coerce')
     df_box = df_box.dropna(subset=['Gross_USD'])
 
@@ -158,36 +123,25 @@ def genre_analysis(df: pd.DataFrame):
     plt.xticks(rotation=45, ha='right')
     plt.title('Gross Revenue by Genre (Top 10, Multi-hot)')
     plt.ylabel('Gross Revenue (USD)')
-    plt.yscale('log')  # optional: better visualization of outliers
+    plt.yscale('log')
     plt.tight_layout()
     plt.show()
 
 def genre_gross_analysis(df: pd.DataFrame, top_n: int = 10):
-
-    # Identify multi-hot genre columns
-    genre_cols = [col for col in df.columns if col in [
-        'Drama', 'Comedy', 'Crime', 'Adventure', 'Action', 'Thriller', 'Romance', 
-        'Biography', 'Mystery', 'Animation', 'Sci-Fi', 'Fantasy', 'Family', 'History',
-        'War', 'Music', 'Horror', 'Western', 'Film-Noir', 'Sport'
-    ]]
-
+    genre_cols = [col for col in df.columns if col in get_genre_list()]
     if not genre_cols:
-        print("No multi-hot genre columns found in DataFrame.")
         return
 
-    # Sum Gross_USD for each genre
     genre_gross = {}
     for genre in genre_cols:
         temp = df[df[genre]==1]['Gross_USD'].dropna()
         temp = pd.to_numeric(temp, errors='coerce')
         genre_gross[genre] = temp.sum()
 
-    # Convert to Series and get top N genres by total gross
     genre_gross = pd.Series(genre_gross).sort_values(ascending=False).head(top_n)
     print("Total Gross Revenue by Top Genres:")
     print(genre_gross)
 
-    # Barplot: total gross per genre
     plt.figure(figsize=(12,6))
     sns.barplot(x=genre_gross.index, y=genre_gross.values, palette='pastel')
     plt.xticks(rotation=45, ha='right')
@@ -196,14 +150,12 @@ def genre_gross_analysis(df: pd.DataFrame, top_n: int = 10):
     plt.tight_layout()
     plt.show()
 
-    # Boxplot: distribution of gross per genre
     df_box = []
     for genre in genre_gross.index:
         temp = df[df[genre]==1][['Gross_USD']].copy()
         temp = temp.dropna(subset=['Gross_USD'])
         temp['Genre'] = genre
         df_box.append(temp)
-
     df_box = pd.concat(df_box, ignore_index=True)
 
     plt.figure(figsize=(12,6))
@@ -211,7 +163,7 @@ def genre_gross_analysis(df: pd.DataFrame, top_n: int = 10):
     plt.xticks(rotation=45, ha='right')
     plt.title(f'Gross Revenue Distribution by Top {top_n} Genres (Multi-hot)')
     plt.ylabel('Gross Revenue (USD)')
-    plt.yscale('log')  # optional: better visualization of outliers
+    plt.yscale('log')
     plt.tight_layout()
     plt.show()
 
