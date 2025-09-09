@@ -117,18 +117,18 @@ Predict IMDB rating for a new movie:
 ```python
 from src.model_predict import predict_imdb_rating
 new_movie = {
- 'Series_Title': 'The Shawshank Redemption',
- 'Released_Year': 1994,
- 'Certificate': 'A',
- 'Runtime_Min': 142,
- 'Genre': 'Drama',
- 'Overview': 'Two imprisoned men bond over a number of years...',
- 'Meta_score': 80.0,
- 'No_of_Votes': 2343110,
- 'Gross_USD': 28341469
+ 'Series_Title': 'Twilight',
+ 'Released_Year': 2008,
+ 'Certificate': 'U',
+ 'Runtime_Min': 130,
+ 'Genre': 'Romance',
+ 'Overview': 'High-school student Bella Swan, always a bit of a misfit...',
+ 'Meta_score': 56.0,
+ 'No_of_Votes': 19780000,
+ 'Gross_USD': 408526215
 }
 rating = predict_imdb_rating(new_movie)
-print(rating)  # Output: 8.61
+print(rating)  
 ```
 
 ---
